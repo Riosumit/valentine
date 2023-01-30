@@ -31,8 +31,13 @@
                         </ul>
                     </div>
                     <div class="btn">
-                        <a href="register" class="btn-up">Sign Up</a>
-                        <a href="login" class="btn-in">Login</a>
+                        {% if loggedin %}
+                            <a href="" class="btn-up">Msg</a>
+                            <a href="logout" class="btn-in">LogOut</a>
+                        {% else %}
+                            <a href="register" class="btn-up">Sign Up</a>
+                            <a href="login" class="btn-in">Login</a>
+                        {% endif %}
                     </div>
                 </div>
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">

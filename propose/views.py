@@ -74,6 +74,8 @@ def login(request):
             elif(password!=account[6]):
                 msg="Incorrect Password!!!"
             else:
+                request.session["loggedin"]=True
+                request.session["logged_roll"]=roll
                 return redirect("home")
         else:
             msg="Incorrect Roll Number"
@@ -81,8 +83,18 @@ def login(request):
     mydb.close()
     return render(request, "login.html",param)
 
+def logout(request):
+    del request.session["loggedin"]
+    del request.session["logged_roll"]
+    return redirect("home")
+
 def home(request):
-    return render(request, "home.html")
+    try:
+        loggedin = request.session['loggedin']
+    except:
+        loggedin = False
+    param = {'loggedin':loggedin}
+    return render(request, "home.html", param)
 
 def about(request):
     return render(request, "about.html")
