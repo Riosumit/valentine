@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="fillup" method="post">
+        <h1>Create account</h1>
+        {% csrf_token %}
+        <label for="name">
+            <input type="text" name="name" id="name" placeholder="Full Name:" required>
+        </label><br>
+        <label for="roll">
+            <input type="text" name="roll" id="roll" placeholder="Roll Number : " required>
+        </label><br>
+        <label for="email">
+            <input type="email" name="email" id="email" placeholder="Email " required>
+        </label><br>
+        <label for="year">Year : <br>
+            <select name="year" id="year" required>
+                <option disabled selected value><b>Select</b></option>
+                <option value="first">First Year</option>
+                <option value="second">Second Year</option>
+                <option value="third">Third Year</option>
+                <option value="final">Final Year</option>
+            </select>
+        </label><br>
+        <label for="branch">Branch : <br>
+            <select name="branch" id="branch" required>
+                <option disabled selected value><b>Select</b></option>
+                <option value="cs">CS</option>
+                <option value="it">IT</option>
+                <option value="ece">ECE</option>
+                <option value="electrical">Electrical</option>
+                <option value="mechcanical">Mechanical</option>
+                <option value="chemical">Chemical</option>
+                <option value="civil">Civil</option>
+                <option value="production">Production</option>
+                <option value="minning">Minning</option>
+                <option value="metalurgy">Metalurgy</option>
+            </select>
+        </label><br>
+        <p>{{msg}}</p>
+        <!-- <a href="./verfication.html"> -->
+        <button type="submit" onclick="">Create Account</button>
+        <!-- </a> -->
+    </form>
+</body>
+</html>

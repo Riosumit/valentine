@@ -101,3 +101,26 @@ def about(request):
 
 def contact(request):
     return render(request, "contact.html")
+
+def fillup(request):
+    name = request.POST.get("name", "")
+    roll = request.POST.get("roll", "")
+    email = request.POST.get("email", "")
+    year = request.POST.get("year", "")
+    branch = request.POST.get("branch", "")
+    msg=''
+    # mydb = mysql.connector.connect(host="sql12.freemysqlhosting.net",user="sql12593693",password="2nytQApMNx",charset='utf8',database="sql12593693")
+    mydb = mysql.connector.connect(host="bsqx344asdfmrehlcqd5-mysql.services.clever-cloud.com",user="ugvj28luz0jwzcjf",password="wvzQGiU131HkHzJ8nhr6",charset='utf8',database="bsqx344asdfmrehlcqd5")
+    if name != "" and roll != "" and email != "":
+        cursor=mydb.cursor()
+        cursor.execute('SELECT * FROM accounts WHERE roll = %s', (roll,))
+        account = cursor.fetchone()
+        if account:
+            msg='account already exists'
+        else:
+            cursor.execute('INSERT INTO accounts VALUES(%s, %s, %s, %s, %s, %s, %s, %s)', (roll, name, email, branch, year, '', '', ''))
+            mydb.commit()
+            print(name,roll,email, branch, year)
+    mydb.close()
+    param={'msg':msg}
+    return render(request, 'fillup.html',param)
