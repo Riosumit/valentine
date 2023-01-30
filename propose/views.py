@@ -19,15 +19,15 @@ def register(request):
         cursor.execute('SELECT * FROM accounts WHERE roll = %s', (roll,))
         account = cursor.fetchone()
         if account:
-            if(account[4]!=""):
+            if(account[5]!=""):
                 msg="Account already Active"
             else:
                 cursor.execute('UPDATE accounts SET password = %s WHERE roll = %s', (password, roll,))
                 mydb.commit()
-                send_mail("Verification", message, "valentinehncc@gmail.com", [account[1]], fail_silently=False,)
+                send_mail("Verification", message, "valentinehncc@gmail.com", [account[2]], fail_silently=False,)
                 print(code)
                 request.session["code"]=code
-                request.session["mail"]=account[1]
+                request.session["mail"]=account[2]
                 request.session["roll"]=roll
                 return redirect("verify")
         else:
@@ -69,9 +69,9 @@ def login(request):
         cursor.execute('SELECT * FROM accounts WHERE roll = %s', (roll,))
         account = cursor.fetchone()
         if account:
-            if(account[4]==""):
+            if(account[5]==""):
                 msg="Account is Incative!!!"
-            elif(password!=account[6]):
+            elif(password!=account[7]):
                 msg="Incorrect Password!!!"
             else:
                 request.session["loggedin"]=True
