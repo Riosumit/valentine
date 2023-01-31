@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/propose.css' %}">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="msg">{{msg}}</div>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li>
+                <select name="branch" id="branch" required>
+                    <option disabled selected value><b>Select</b></option>
+                    <option value="CS">CS</option>
+                    <option value="IT">IT</option>
+                    <option value="ECE">ECE</option>
+                    <option value="Electrical">Electrical</option>
+                    <option value="Mechcanical">Mechanical</option>
+                    <option value="Chemical">Chemical</option>
+                    <option value="Civil">Civil</option>
+                    <option value="Production">Production</option>
+                    <option value="Minning">Minning</option>
+                    <option value="Metalurgy">Metalurgy</option>
+                </select>
+            </li>
+            <li class="dropdown">
+                <select name="year" id="year" required>
+                    <option disabled selected value><b>Select</b></option>
+                    <option value="First">First Year</option>
+                    <option value="Second">Second Year</option>
+                    <option value="Third">Third Year</option>
+                    <option value="Final">Final Year</option>
+                </select>
+            </li>
+            <!-- <button class="filter-btn">Filter</button> -->
+        </ul>
+    </nav>
+
+    <div class="main">
+        <ul>
+            {% for roll, name, branch, batch in account %}
+            <li class="{{branch}} {{batch}} all" style="display: none;">
+                <span>{{roll}}</span>
+                <span>{{name}}</span>
+                <span>{{branch}}</span>
+                <span>{{batch}} Year</span>
+                <button type="reset" class="propose-btn" onclick='propose("{{roll}}")'>Propose</button>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <span class="close-btn">&times;</span>
+                <form action="propose" method="post">
+                    {% csrf_token %}
+                    <label for="name">Name : <br>
+                        <input type="text" name="name" id="name" placeholder="Name you want to mension">
+                    </label><br><br>
+                    <label for="message">Message : <br>
+                        <textarea id="message" name="message" rows="5"></textarea>
+                    </label><br>
+                    <input type="text" id="roll" name="roll" value="" style="display: none;">
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+</body>
+
+<script>
+    const proposeBtns = document.querySelectorAll(".propose-btn");
+    const popup = document.getElementById("popup");
+    const closeBtn = document.querySelector(".close-btn");
+    const messageInput = document.getElementById("message");
+    const rollInput = document.getElementById("roll");
+
+    proposeBtns.forEach(btn => {
+        btn.addEventListener("click", function () {
+            popup.style.display = "block";
+        });
+    });
+
+    closeBtn.addEventListener("click", function () {
+        popup.style.display = "none";
+    });
+
+    popup.addEventListener("click", function (event) {
+        if (event.target === popup) {
+            popup.style.display = "none";
+        }
+    });
+    // document.getElementsByClassName("filter-btn")[0].addEventListener("click", function (event) {
+    //     branch = document.getElementById('branch').value;
+    //     year = document.getElementById('year').value;
+    //     class_name = branch + "_" + year;
+    //     ele = document.getElementsByClassName(class_name);
+    //     for(var i=0; i<ele.length; i++){
+    //         ele[i].style.display="flex";
+    //     }
+    // });
+    document.getElementById("branch").addEventListener("change", function (event) {
+        // br = ["cs", "it", "ece", "electrical", "metalurgy", "minning", "production", "civil", "mechanical", "chemical"]
+        branch = document.getElementById('branch').value;
+        year = document.getElementById('year').value;
+        ele = document.getElementsByClassName(branch);
+        all = document.getElementsByClassName("all");
+        for(var i=0; i<all.length; i++){
+            all[i].style.display="none";
+        }
+        for(var i=0; i<ele.length; i++){
+            ele[i].style.display="flex";
+        }
+    });
+    document.getElementById("year").addEventListener("change", function (event) {
+        branch = document.getElementById('branch').value;
+        year = document.getElementById('year').value;
+        ele = document.getElementsByClassName(year);
+        all = document.getElementsByClassName("all");
+        for(var i=0; i<all.length; i++){
+            all[i].style.display="none";
+        }
+        for(var i=0; i<ele.length; i++){
+            ele[i].style.display="flex";
+        }
+    });
+    branch = document.getElementById('branch').value;
+    year = document.getElementById('year').value;
+    if(branch == ""){
+        all = document.getElementsByClassName("all");
+        for(var i=0; i<all.length; i++){
+            all[i].style.display="flex";
+        }
+    }
+    if(year == ""){
+        all = document.getElementsByClassName("all");
+        for(var i=0; i<all.length; i++){
+            all[i].style.display="flex";
+        }
+    }
+    function propose(roll){
+        console.log(roll);
+        document.getElementById('roll').value=roll;
+    }
+</script>
+
+</html>

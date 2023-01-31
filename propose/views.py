@@ -7,6 +7,12 @@ import mysql.connector
 # Create your views here.
 
 def register(request):
+    try:
+        loggedin = request.session['loggedin']
+    except:
+        loggedin = False
+    if loggedin:
+        return redirect(home)
     roll = request.POST.get("roll", "")
     password = request.POST.get("password", "")
     msg=''
@@ -32,11 +38,18 @@ def register(request):
                 return redirect("verify")
         else:
             msg="Incorrect Roll Number"
+        cursor.close()
     param ={"msg":msg}
     mydb.close()
     return render(request, "register.html",param)
 
 def verify(request):
+    try:
+        loggedin = request.session['loggedin']
+    except:
+        loggedin = False
+    if loggedin:
+        return redirect(home)
     # mydb = mysql.connector.connect(host="sql12.freemysqlhosting.net",user="sql12593693",password="2nytQApMNx",charset='utf8',database="sql12593693")
     mydb = mysql.connector.connect(host="bsqx344asdfmrehlcqd5-mysql.services.clever-cloud.com",user="ugvj28luz0jwzcjf",password="wvzQGiU131HkHzJ8nhr6",charset='utf8',database="bsqx344asdfmrehlcqd5")
     try:
@@ -53,12 +66,19 @@ def verify(request):
             cursor=mydb.cursor()
             cursor.execute('UPDATE accounts SET state = "Active", status = "verified" WHERE roll = %s', (request.session["roll"],))
             mydb.commit()
+            cursor.close()
             return redirect("register")
     param={"msg":msg}
     mydb.close()
     return render(request, "verify.html", param)
 
 def login(request):
+    try:
+        loggedin = request.session['loggedin']
+    except:
+        loggedin = False
+    if loggedin:
+        return redirect(home)
     roll = request.POST.get("roll", "")
     password = request.POST.get("password", "")
     msg=''
@@ -79,6 +99,7 @@ def login(request):
                 return redirect("home")
         else:
             msg="Incorrect Roll Number"
+        cursor.close()
     param ={"msg":msg}
     mydb.close()
     return render(request, "login.html",param)
@@ -102,6 +123,39 @@ def about(request):
 def contact(request):
     return render(request, "contact.html")
 
+def propose(request):
+    # mydb = mysql.connector.connect(host="sql12.freemysqlhosting.net",user="sql12593693",password="2nytQApMNx",charset='utf8',database="sql12593693")
+    mydb = mysql.connector.connect(host="bsqx344asdfmrehlcqd5-mysql.services.clever-cloud.com",user="ugvj28luz0jwzcjf",password="wvzQGiU131HkHzJ8nhr6",charset='utf8',database="bsqx344asdfmrehlcqd5")
+    try:
+        loggedin = request.session['loggedin']
+    except:
+        loggedin = False
+    if not loggedin:
+        return redirect(home)
+    name = request.POST.get("name", "")
+    roll = request.POST.get("roll", "")
+    message = request.POST.get("message", "")
+    msg = ''
+    cursor=mydb.cursor()
+    if roll != "" and message != "":
+        print(name, roll, message)
+        cursor.execute('INSERT INTO proposal VALUES(%s, %s, %s, %s, %s)', (request.session["logged_roll"], roll, name, message, ''))
+        mydb.commit()
+        msg='Proposal Sent Succesfully'
+    cursor.execute('SELECT roll, name, branch, batch FROM accounts where roll != %s ORDER BY roll', (request.session["logged_roll"],))
+    account = cursor.fetchall()
+    cursor.execute('SELECT to_roll FROM proposal')
+    proposal = cursor.fetchall()
+    for i in proposal:
+        for j in account:
+            if(i[0]==j[0]):
+                account.remove(j)
+                break
+    cursor.close()
+    param = {'account':account, 'msg':msg}
+    mydb.close()
+    return render(request, 'propose.html', param)
+
 def fillup(request):
     name = request.POST.get("name", "")
     roll = request.POST.get("roll", "")
@@ -121,6 +175,7 @@ def fillup(request):
             cursor.execute('INSERT INTO accounts VALUES(%s, %s, %s, %s, %s, %s, %s, %s)', (roll, name, email, branch, year, '', '', ''))
             mydb.commit()
             print(name,roll,email, branch, year)
+        cursor.close()
     mydb.close()
     param={'msg':msg}
     return render(request, 'fillup.html',param)
