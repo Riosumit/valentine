@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-bxp8f1ctwto5#uy+khcum6ol(mj8wrmr!wv8z_+#@6u-7r-)xi'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 
@@ -146,3 +146,7 @@ EMAIL_HOST_PASSWORD= "sjkgoxcgneqxfumn"
 EMAIL_USE_TLS= True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+if not DEBUG:
+    CSRF_TRUSTED_ORIGINS = ["https://web-production-7494.up.railway.app"]
