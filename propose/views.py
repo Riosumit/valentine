@@ -144,7 +144,7 @@ def propose(request):
         msg='Proposal Sent Succesfully'
     cursor.execute('SELECT roll, name, branch, batch FROM accounts where roll != %s ORDER BY roll', (request.session["logged_roll"],))
     account = cursor.fetchall()
-    cursor.execute('SELECT to_roll FROM proposal')
+    cursor.execute('SELECT to_roll FROM proposal where from_roll != %s', (request.session["logged_roll"],))
     proposal = cursor.fetchall()
     for i in proposal:
         for j in account:

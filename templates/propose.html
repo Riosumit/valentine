@@ -46,7 +46,7 @@
     <div class="main">
         <ul>
             {% for roll, name, branch, batch in account %}
-            <li class="{{branch}} {{batch}} all" style="display: none;">
+            <li class="{{branch}} {{batch}} {{branch}}_{{batch}} all" style="display: none;">
                 <span>{{roll}}</span>
                 <span>{{name}}</span>
                 <span>{{branch}}</span>
@@ -118,8 +118,18 @@
         for(var i=0; i<all.length; i++){
             all[i].style.display="none";
         }
-        for(var i=0; i<ele.length; i++){
-            ele[i].style.display="flex";
+        if(year==""){
+            ele = document.getElementsByClassName(branch);
+            for(var i=0; i<ele.length; i++){
+                ele[i].style.display="flex";
+            }
+        }
+        else{
+            class_name = branch + "_" + year;
+            ele = document.getElementsByClassName(class_name);
+            for(var i=0; i<ele.length; i++){
+                ele[i].style.display="flex";
+            }
         }
     });
     document.getElementById("year").addEventListener("change", function (event) {
@@ -130,8 +140,18 @@
         for(var i=0; i<all.length; i++){
             all[i].style.display="none";
         }
-        for(var i=0; i<ele.length; i++){
-            ele[i].style.display="flex";
+        if(branch==""){
+            ele = document.getElementsByClassName(year);
+            for(var i=0; i<ele.length; i++){
+                ele[i].style.display="flex";
+            }
+        }
+        else{
+            class_name = branch + "_" + year;
+            ele = document.getElementsByClassName(class_name);
+            for(var i=0; i<ele.length; i++){
+                ele[i].style.display="flex";
+            }
         }
     });
     branch = document.getElementById('branch').value;
