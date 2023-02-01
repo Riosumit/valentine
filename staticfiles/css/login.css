@@ -1,0 +1,196 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  /* vertical-align: baseline; */
+}
+
+::-webkit-scrollbar {
+  width: 0em;
+  background: #f5f5f5;
+}
+::-webkit-slider-thumb {
+  background: #000000;
+}
+::-webkit-slider-thumb:hover {
+  background: #555;
+}
+
+body {
+  background-image: linear-gradient(116.6deg, #ff889b 0%, #fc136b 98%);
+  font-family: "Nunito";
+  /* background-size: cover; */
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  width: 100vw;
+  /* margin-top: -5px; */
+}
+
+ul li {
+  list-style-type: none;
+}
+a {
+  text-decoration: none;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+nav {
+  position: relative;
+  top: 25px;
+}
+nav > div {
+  background: #f7f7f7;
+  margin-inline: 60px;
+  /* margin-block: 30px; */
+  border-radius: 6px;
+}
+nav > div > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-inline: 54px;
+  /* margin-block: 13px; */
+}
+
+nav ul {
+  display: flex;
+  gap: 40px;
+}
+
+nav div ul li a {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 33px;
+  color: #fc136b;
+}
+
+.btn {
+  display: flex;
+  gap: 20px;
+}
+
+.btn a {
+  font-family: inherit;
+  padding: 7.02762px 33px;
+  border: 2px solid #fc136b;
+  border-radius: 5.27072px;
+  /* font-weight: 600;
+  font-size: 24px;
+  line-height: 33px; */
+}
+.btn-up {
+  color: #fc136b;
+}
+.btn-in {
+  background: #fc136b;
+  color: #f7f7f7;
+}
+nav svg {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  nav > div > div {
+    justify-content: space-between;
+  }
+  .nav-links {
+    flex-direction: column;
+    position: absolute;
+    border-radius: 6px;
+    top: 30px;
+    right: 10px;
+    background: #f7f7f7;
+    height: calc(100%-60px);
+    width: 35%;
+    align-items: center;
+    transform: translateX((100%));
+    transition: transform 0.3s ease-in-out;
+  }
+}
+main {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.container {
+  z-index: 1;
+  position: absolute;
+  width: 492px;
+  height: 492px;
+  background: #ffffff;
+  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  margin-top: 60px;
+  z-index: 2;
+  position: relative;
+  max-width: 600px;
+  height: auto;
+}
+
+.container form {
+  margin-bottom: 50px;
+}
+
+.container form input {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0 0.25rem 0;
+  border-bottom: 0.811454px solid rgba(44, 44, 44, 0.5);
+}
+.container form input::placeholder {
+  font-family: "Nunito";
+  color: #2e3c3d;
+}
+.container form button {
+  font-family: "Nunito";
+  background: linear-gradient(116.6deg, #ff889b 0%, #fc136b 98%);
+  color: #ffffff;
+  border-radius: 4.05727px;
+  padding: 10px;
+  margin-block: 20px;
+  width: 100%;
+}
+
+.container form p {
+  color: #2e3c3d;
+}
+
+.container form p a {
+  color: #ff00d6;
+}
+
+@media (max-width: 1024px) {
+  .image {
+    max-width: 550px;
+  }
+  .container {
+    width: 451px;
+    height: 451px;
+  }
+}
+@media (max-width: 576px) {
+  .image {
+    max-width: 500px;
+  }
+  .container {
+    width: 410px;
+    height: 410px;
+  }
+  .container form {
+    margin-bottom: 70px;
+  }
+}

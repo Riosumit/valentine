@@ -1,0 +1,22 @@
+:root {
+  /* fonts */
+  --font-oleo-script: "Oleo Script";
+  --font-nunito: Nunito;
+
+  /* font sizes */
+  --font-size-base: 24px;
+
+  /* Colors */
+  --color-crimson: #fc136b;
+  --color-white: #fff;
+
+  /* Paddings */
+  --padding-md: 7.027624607086182px;
+
+  /* border radiuses */
+  --br-md: 5.27px;
+}
+header{
+  position: sticky;
+  z-index: 50;
+}
